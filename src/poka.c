@@ -25,11 +25,14 @@ static char token[MAX];
 int gettoken(void)
 {
     int index = 0;
-    int ch, decimal = 0;
+    int ch, decimal = 0, type;
 
     memset(token, 0, MAX);
-    while ((ch = getchar()) != EOF && (ch == ' ' || ch == '\t'))
-        ;
+
+    ch = getchar();
+    while (isspace(ch)) {
+        ch = getchar();
+    }
 
     if (ch == EOF) return END;
 
@@ -41,44 +44,60 @@ int gettoken(void)
             else if (decimal != 0) {
                 decimal = 1;
             }
+
+            if (index == MAX - 2) break;
             token[index++] = ch;
             ch = getchar();
         }
 
-        if (ch != EOF) token[index++] = ch;
-
-        putc(ch, stdin);
-        token[index - 1] = '\0';
-
+        ungetc(ch, stdin);
         return NUMBER;
     }
 
+    type = ERROR;
+
     switch (ch) {
         case '+':
-            return PLUS;
+            type = PLUS;
+            break;
         case '-':
-            return MINUS;
+            type = MINUS;
+            break;
         case '*':
-            return MULT;
+            type = MULT;
+            break;
         case '/':
-            return DIV;
+            type = DIV;
+            break;
         case '%':
-            return REM;
+            type = REM;
+            break;
         case '^':
-            return POW;
+            type = POW;
+            break;
+        case ':':
+            ch = getchar();
+            if (ch != EOF && ch == '=') {
+                return ASSIGN;
+            }
+            break;
         default:
             break;
     }
 
-    putc(ch, stdin);
-    return ERROR;
+    return type;
 }
 
 
 int main()
 {
     int type = gettoken();
-    printf("%d %s\n", type, token);
+
+    while (type != ERROR && type != END) {
+        printf("%d %s\n", type, token);
+        type = gettoken();
+    }
+
     return 0;
 }
 
