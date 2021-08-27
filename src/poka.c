@@ -57,13 +57,17 @@ int gettoken(void)
     {
         while ((ch >= '0' && ch <= '9') || (ch == '.'))
         {
-            if ((ch == '.') && (decimal != 0))
+            if (ch == '.')
             {
-                return ERROR;
-            }
-            else if (decimal != 0)
-            {
-                decimal = 1;
+                if (decimal > 0)
+                {
+                    /* Already found a decimal point */
+                    return ERROR;
+                }
+                else
+                {
+                    decimal = 1;
+                }
             }
 
             if (index == MAX - 2)
@@ -176,6 +180,9 @@ int gettoken(void)
     case '}':
         type = CCURLY;
         break;
+    case EOF:
+        type = END;
+        break;
     default:
         break;
     }
@@ -214,6 +221,11 @@ int main()
     {
         printf("%d %s\n", type, token);
         type = gettoken();
+    }
+
+    if (type == ERROR)
+    {
+        puts("]]ERROR");
     }
 
     return 0;
