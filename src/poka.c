@@ -16,7 +16,22 @@ enum {
     DIV,
     REM,
     POW,
-    ASSIGN
+    ASSIGN,
+    SYM,
+    SEMI,
+    COLON,
+    EQ,
+    LT,
+    GT,
+    NOT,
+    LE,
+    GE,
+    OPAREN,
+    CPAREN,
+    OBRACKET,
+    CBRACKET,
+    OCURLY,
+    CCURLY
 };
 
 
@@ -54,6 +69,17 @@ int gettoken(void)
         return NUMBER;
     }
 
+    if (isalpha(ch)) {
+        while (isalpha(ch) || isdigit(ch) || ch =='_') {
+            if (index == MAX - 2) break;
+            token[index++] = ch;
+            ch = getchar();
+        }
+
+        ungetc(ch, stdin);
+        return SYM;
+    }
+
     type = ERROR;
 
     switch (ch) {
@@ -78,8 +104,59 @@ int gettoken(void)
         case ':':
             ch = getchar();
             if (ch != EOF && ch == '=') {
-                return ASSIGN;
+                type = ASSIGN;
             }
+            else {
+                ungetc(ch, stdin);
+                type = COLON; 
+            }
+            break;
+        case ';':
+            type = SEMI;
+            break;
+        case '=':
+            type = EQ;
+            break;
+        case '<':
+            ch = getchar();
+            if (ch == '>') {
+                type = NOT;
+            }
+            else if (ch == '=') {
+                type = LE;
+            }
+            else {
+                type = LT;
+                ungetc(ch, stdin);
+            }
+            break;
+        case '>':
+            ch = getchar();
+            if (ch == '=') {
+                type = GE;
+            }
+            else {
+                type = GT;
+                ungetc(ch, stdin);
+            }
+            break;
+        case '(':
+            type = OPAREN;
+            break;
+        case ')':
+            type = CPAREN;
+            break;
+        case '[':
+            type = OBRACKET;
+            break;
+        case ']':
+            type = CBRACKET;
+            break;
+        case '{':
+            type = OCURLY;
+            break;
+        case '}':
+            type = CCURLY;
             break;
         default:
             break;
