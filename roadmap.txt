@@ -1,0 +1,15 @@
+1. Build a simple recursive descent parser.
+2. Add conditionals, loops and procedures.
+3. Make it work with numeric types
+    a. First a generic number type.
+    b. Add specialized types such as real, integer and complex (may defer).
+4. Add functions.
+5. Add string type - try to design without char types, if not, add that too.
+6. Arrays.
+7. Maps.
+8. Dictionaries.
+9. Custom types.
+10. Modules.
+
+
+
