@@ -1,0 +1,29 @@
+Program -> ProgramHead ProgramBody
+ProgramHead -> program SYM ;
+ProgramBody -> UsePart? ProcedurePart? VarPart? CodePart
+UsePart -> use Symbols ;
+Symbols -> SYM | Symbol , Symbols 
+ProcedurePart -> Procedures ;
+Procedures -> Procedure | Procedure ; Procedures
+Procedure -> procedure SYM ( Decls? ) VarPart? CodePart
+Decls -> Decl | Decl ; Decls
+Decl -> SYM : SYM
+VarPart -> var Decls ;
+CodePart -> begin Statements end
+Statements -> Statement | Statement ; Statements
+Expr -> NUMBER 
+    | SYM 
+    | ( Expr ) 
+    | Expr PLUS Expr 
+    | Expr MINUS Expr 
+    | Expr MULT Expr
+    | Expr DIV Expr
+    | Expr POW Expr
+    | Expr REM Expr
+    | MINUS Expr
+Exprs -> Expr
+        | Expr , Exprs
+Assignment -> SYM ASSIGN Expr
+PrintStatemtn -> print Exprs
+Statement -> Assignment
+            | PrintStatemt
