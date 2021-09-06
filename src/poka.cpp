@@ -7,7 +7,7 @@
 
 #define MAX 100
 
-namespace lex
+namespace parser
 {
     enum class Token
     {
@@ -229,17 +229,17 @@ namespace lex
 
 int main()
 {
-    lex::Lexer lexer;
+    parser::Lexer lexer;
 
-    lex::Token type = lexer.gettoken();
+    parser::Token type = lexer.gettoken();
 
-    while (type != lex::Token::ERROR && type != lex::Token::END)
+    while (type != parser::Token::ERROR && type != parser::Token::END)
     {
         std::printf("%d %s\n", type, lexer.token.c_str());
         type = lexer.gettoken();
     }
 
-    if (type == lex::Token::ERROR)
+    if (type == parser::Token::ERROR)
     {
         std::puts("]]ERROR");
     }
