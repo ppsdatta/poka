@@ -1,4 +1,4 @@
-CPP = g++
+CPP=g++
 STD=c++17
 
 all : src/poka.cpp
