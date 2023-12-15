@@ -1,5 +1,6 @@
-CPP=g++
-STD=c++17
+# CPP=g++
+CPP=clang++
+STD=c++20
 
 all : src/poka.cpp
 	$(CPP) -std=$(STD) -o poka src/poka.cpp

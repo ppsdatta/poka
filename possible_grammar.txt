@@ -2,7 +2,7 @@ Program -> ProgramHead ProgramBody
 ProgramHead -> program SYM ;
 ProgramBody -> UsePart? ProcedurePart? VarPart? CodePart
 UsePart -> use Symbols ;
-Symbols -> SYM | Symbol , Symbols 
+Symbols -> SYM | SYM , Symbols 
 ProcedurePart -> Procedures ;
 Procedures -> Procedure | Procedure ; Procedures
 Procedure -> procedure SYM ( Decls? ) VarPart? CodePart
